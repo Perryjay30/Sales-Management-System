@@ -3,6 +3,7 @@ package com.challengetwo.salesmanagementsystem.salesmanagement.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Sales {
     private Long id;
 
     @Column(name = "creation_date")
-    private LocalDateTime creationDate;
+    private LocalDate creationDate;
 
     @Column(name = "client_id")
     private Long clientId;

@@ -23,10 +23,10 @@ class SalesServiceImplTest {
     @Test
     void testThatASaleAndItsTransactionCanBeSaved() {
         CreateSalesRequest createSalesRequest = new CreateSalesRequest();
-        createSalesRequest.setClientId(1L);
-        createSalesRequest.setSellerId(1L);
+        createSalesRequest.setClientId(4L);
+        createSalesRequest.setSellerId(4L);
         List<TransactionRequest> transactionRequestList = new ArrayList<>();
-        transactionRequestList.add(new TransactionRequest(1L, 19, 156000.00));
+        transactionRequestList.add(new TransactionRequest(3L, 11, 1000.00));
         createSalesRequest.setTransactions(transactionRequestList);
         Response response = salesService.createSales(createSalesRequest);
         assertEquals("A sale has been saved successfully!!", response.getMessage());

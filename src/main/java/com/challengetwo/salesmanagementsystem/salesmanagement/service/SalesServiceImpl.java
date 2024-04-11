@@ -11,15 +11,22 @@ import com.challengetwo.salesmanagementsystem.salesmanagement.repository.SalesRe
 import com.challengetwo.salesmanagementsystem.salesmanagement.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class SalesServiceImpl implements SalesService {
 
     private final SalesRepository salesRepository;
     private final TransactionRepository transactionRepository;
+
+//    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
 
 
     public SalesServiceImpl(SalesRepository salesRepository, TransactionRepository transactionRepository) {
@@ -32,7 +39,7 @@ public class SalesServiceImpl implements SalesService {
         Sales savedSale = new Sales();
         savedSale.setClientId(createSalesRequest.getClientId());
         savedSale.setSellerId(createSalesRequest.getSellerId());
-        savedSale.setCreationDate(LocalDateTime.now());
+        savedSale.setCreationDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(new Date())));
         salesRepository.save(savedSale);
         List<Transaction> transactions = getTransactionsForASale(createSalesRequest, savedSale);
         savedSale.setTransactions(transactions);
