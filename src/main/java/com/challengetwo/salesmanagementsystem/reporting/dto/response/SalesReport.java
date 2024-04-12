@@ -12,6 +12,6 @@ import java.util.List;
 public class SalesReport {
     private int totalSales;
     private double totalRevenue;
-    private List<Seller> topPerformingSellers;
-    private List<Product> topSellingProduct;
+    private List<Long> topPerformingSellers;
+    private List<Long> topSellingProduct;
 }

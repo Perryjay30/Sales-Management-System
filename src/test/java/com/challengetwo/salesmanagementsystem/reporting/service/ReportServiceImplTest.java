@@ -22,7 +22,8 @@ class ReportServiceImplTest {
         salesReportRequest.setStartDate(LocalDate.of(2024, 4, 11));
         salesReportRequest.setEndDate(LocalDate.of(2024, 4, 11));
         SalesReport salesReport = reportService.generateSalesReport(salesReportRequest);
-        assertEquals(1, salesReport.getTotalSales());
+        assertEquals(2, salesReport.getTotalSales());
+        assertEquals(229000.00, salesReport.getTotalRevenue());
     }
 
 }
