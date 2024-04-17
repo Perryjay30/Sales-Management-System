@@ -21,10 +21,10 @@ class ProductServiceImplTest {
     @Test
     void testThatProductCanBeAddedToInventory() {
         AddProductRequest addProductRequest = new AddProductRequest();
-        addProductRequest.setProductName("Hisense LED TV");
-        addProductRequest.setProductQuantity(15);
-        addProductRequest.setCategory(String.valueOf(ProductCategory.ELECTRONICS));
-        addProductRequest.setUnitPrice(137000.00);
+        addProductRequest.setProductName("IPhone 14 pro");
+        addProductRequest.setProductQuantity(5);
+        addProductRequest.setCategory(String.valueOf(ProductCategory.COMPUTING));
+        addProductRequest.setUnitPrice(560000.00);
         Response response = productService.addProductToInventory(addProductRequest);
         assertEquals("Product added successfully to inventory", response.getMessage());
     }
@@ -42,7 +42,7 @@ class ProductServiceImplTest {
         editProductRequest.setProductQuantity(52);
         editProductRequest.setCategory(String.valueOf(ProductCategory.COMPUTING));
         editProductRequest.setUnitPrice(100000.00);
-        Response response = productService.updateProduct(1L, editProductRequest);
+        Response response = productService.updateProduct(102L, editProductRequest);
         assertEquals("Product updated successfully!!", response.getMessage());
     }
 

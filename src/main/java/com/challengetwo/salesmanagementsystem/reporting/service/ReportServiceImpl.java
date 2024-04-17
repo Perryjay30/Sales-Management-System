@@ -167,7 +167,7 @@ public class ReportServiceImpl implements ReportService {
         int totalProducts = products.size();
         Long totalAvailable = products.stream().filter(Product::isAvailable).count();
 //        int totalReserved = products.stream().filter(Product::isReserved).count();
-        Long totalOutOfStock = products.stream().filter(Product::isOutOfStock).count();
+        Long totalOutOfStock = products.stream().filter(product -> !product.isAvailable()).count();
         return new InventoryStatus(totalProducts, totalAvailable, totalOutOfStock);
     }
 

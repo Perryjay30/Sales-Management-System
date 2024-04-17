@@ -26,7 +26,7 @@ class SalesServiceImplTest {
         createSalesRequest.setClientId(2L);
         createSalesRequest.setSellerId(1L);
         List<TransactionRequest> transactionRequestList = new ArrayList<>();
-        transactionRequestList.add(new TransactionRequest(6L, 7, 228000.00));
+        transactionRequestList.add(new TransactionRequest(102L, 2, 100000.00));
         createSalesRequest.setTransactions(transactionRequestList);
         Response response = salesService.createSales(createSalesRequest);
         assertEquals("A sale has been saved successfully!!", response.getMessage());

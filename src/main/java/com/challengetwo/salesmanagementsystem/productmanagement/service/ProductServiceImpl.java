@@ -27,6 +27,8 @@ public class ProductServiceImpl implements ProductService {
         ObjectMapper objectMapper = new ObjectMapper();
         Product product = objectMapper.convertValue(addProductRequest, Product.class);
         productRepository.save(product);
+        productRepository.updateAvailabilityBasedOnQuantity();
+
         return new Response("Product added successfully to inventory");
     }
 
@@ -47,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
                 .equals("") ? ProductCategory.valueOf(editProductRequest.getCategory()) : existingProduct.getCategory());
         existingProduct.setUnitPrice(editProductRequest.getUnitPrice() != 0.00 ? editProductRequest.getUnitPrice() : existingProduct.getUnitPrice());
         productRepository.save(existingProduct);
+        productRepository.updateAvailabilityBasedOnQuantity();
         return new Response("Product updated successfully!!");
     }
 
@@ -55,7 +58,6 @@ public class ProductServiceImpl implements ProductService {
         Product existingProduct = getProduct(productId);
         productRepository.delete(existingProduct);
         return new Response("Product deleted from Inventory");
-
     }
 
     @Override
