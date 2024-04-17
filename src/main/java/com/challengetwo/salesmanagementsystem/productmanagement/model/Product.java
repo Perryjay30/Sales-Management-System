@@ -17,5 +17,7 @@ public class Product {
     private ProductCategory category;
     private double unitPrice;
     private int productQuantity;
+    private boolean isAvailable;
+    private boolean isOutOfStock;
 
 }

@@ -10,6 +10,8 @@ import com.challengetwo.salesmanagementsystem.productmanagement.repository.Produ
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -54,5 +56,10 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(existingProduct);
         return new Response("Product deleted from Inventory");
 
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
     }
 }

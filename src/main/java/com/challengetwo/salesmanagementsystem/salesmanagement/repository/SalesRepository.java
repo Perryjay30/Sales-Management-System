@@ -13,9 +13,11 @@ import java.util.Optional;
 @Transactional
 public interface SalesRepository extends JpaRepository<Sales, Long> {
     Optional<Sales> findSalesById(Long salesId);
-
     @Query("SELECT DISTINCT s FROM Sales s LEFT JOIN FETCH s.transactions WHERE s.creationDate BETWEEN :startDate AND :endDate")
     List<Sales> findByCreationDateBetweenFetchTransactions(LocalDate startDate, LocalDate endDate);
+
+    @Query("SELECT s FROM Sales s LEFT JOIN FETCH s.transactions")
+    List<Sales> findAllSales();
 
 
 

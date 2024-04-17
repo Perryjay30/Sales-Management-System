@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class SalesReportRequest {
+public class ReportRequest {
     private LocalDate startDate;
     private LocalDate endDate;
 }

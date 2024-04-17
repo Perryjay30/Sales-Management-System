@@ -23,13 +23,13 @@ class UserServiceImplTest {
         userRegistrationRequest.setLastName("Perry");
         userRegistrationRequest.setPassword("Perryjay@17");
         String response = userService.register(userRegistrationRequest);
-        assertEquals("User registration successful!!", response);
+        assertEquals("Token successfully sent to your email. Please check.", response);
     }
 
     @Test
     void testThatUserCanCreateAccount() {
         VerifyOtpRequest verifyOtpRequest = new VerifyOtpRequest();
-        verifyOtpRequest.setToken("9455");
+        verifyOtpRequest.setToken("1336");
         Response response = userService.createAccount("starlight@gmail.com", verifyOtpRequest);
         assertEquals("User registration successful", response.getMessage());
     }

@@ -37,6 +37,7 @@ public class User {
     private String homeAddress;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CustomerOrder> customerOrderList = new ArrayList<>();
+    private double totalSpending;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "otp_token_id", referencedColumnName = "id", nullable = true)
