@@ -21,10 +21,10 @@ class ProductServiceImplTest {
     @Test
     void testThatProductCanBeAddedToInventory() {
         AddProductRequest addProductRequest = new AddProductRequest();
-        addProductRequest.setProductName("IPhone 14 pro");
-        addProductRequest.setProductQuantity(5);
+        addProductRequest.setProductName("Dell Laptop");
+        addProductRequest.setProductQuantity(37);
         addProductRequest.setCategory(String.valueOf(ProductCategory.COMPUTING));
-        addProductRequest.setUnitPrice(560000.00);
+        addProductRequest.setUnitPrice(210000.00);
         Response response = productService.addProductToInventory(addProductRequest);
         assertEquals("Product added successfully to inventory", response.getMessage());
     }

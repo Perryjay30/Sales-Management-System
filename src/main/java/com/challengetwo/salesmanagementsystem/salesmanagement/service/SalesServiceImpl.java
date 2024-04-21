@@ -40,6 +40,7 @@ public class SalesServiceImpl implements SalesService {
         savedSale.setClientId(createSalesRequest.getClientId());
         savedSale.setSellerId(createSalesRequest.getSellerId());
         savedSale.setCreationDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(new Date())));
+
         salesRepository.save(savedSale);
         List<Transaction> transactions = getTransactionsForASale(createSalesRequest, savedSale);
         savedSale.setTransactions(transactions);
@@ -70,19 +71,21 @@ public class SalesServiceImpl implements SalesService {
 
     @Override
     public Response editQuantityAndPricesOfSale(Long salesId, EditSales editSalesRequest) {
-        Sales existingSale = getSales(salesId);
+        Sales existingSale = salesRepository.findSalesById(salesId).orElseThrow();
         Transaction existingTransaction = transactionRepository.findTransactionById(editSalesRequest.getTransactionId())
                 .orElseThrow(() -> new SalesManagementSystemException("Transaction is not available!!"));
+        existingSale.setModifiedDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(new Date())));
         List<TransactionRequest> transactionRequests = editSalesRequest.getTransactions();
         List<Transaction> transactions = new ArrayList<>();
         for(TransactionRequest transReq : transactionRequests) {
-            existingTransaction.setPrice(transReq.getPrice());
-            existingTransaction.setQuantity(transReq.getQuantity());
+            existingTransaction.setProductId(transReq.getProductId() != 0 ? transReq.getProductId() : existingTransaction.getProductId());
+            existingTransaction.setPrice(transReq.getPrice() != 0.00 ? transReq.getPrice() : existingTransaction.getPrice());
+            existingTransaction.setQuantity(transReq.getQuantity() != 0 ? transReq.getQuantity() : existingTransaction.getQuantity());
             transactions.add(existingTransaction);
         }
+        transactionRepository.saveAll(transactions);
         existingSale.setTransactions(transactions);
         salesRepository.save(existingSale);
-        transactionRepository.saveAll(transactions);
         return new Response("Quantity and price updated successfully");
     }
 

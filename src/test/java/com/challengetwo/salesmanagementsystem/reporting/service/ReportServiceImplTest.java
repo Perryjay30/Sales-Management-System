@@ -31,7 +31,7 @@ class ReportServiceImplTest {
     @Test
     void testThatClientReportCanBeRetrieved() {
         ClientReportResponse clientReportResponse = reportService.generateClientReport();
-        assertEquals(2, clientReportResponse.getTotalClients());
+        assertEquals(4, clientReportResponse.getTotalClients());
     }
 
     @Test

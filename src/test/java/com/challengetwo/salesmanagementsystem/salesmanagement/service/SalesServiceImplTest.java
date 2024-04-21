@@ -23,10 +23,10 @@ class SalesServiceImplTest {
     @Test
     void testThatASaleAndItsTransactionCanBeSaved() {
         CreateSalesRequest createSalesRequest = new CreateSalesRequest();
-        createSalesRequest.setClientId(2L);
-        createSalesRequest.setSellerId(1L);
+        createSalesRequest.setClientId(3L);
+        createSalesRequest.setSellerId(2L);
         List<TransactionRequest> transactionRequestList = new ArrayList<>();
-        transactionRequestList.add(new TransactionRequest(102L, 2, 100000.00));
+        transactionRequestList.add(new TransactionRequest(102L, 4, 17000.00));
         createSalesRequest.setTransactions(transactionRequestList);
         Response response = salesService.createSales(createSalesRequest);
         assertEquals("A sale has been saved successfully!!", response.getMessage());
@@ -34,18 +34,18 @@ class SalesServiceImplTest {
 
     @Test
     void testThatSalesCanBeRetrievedFromTheDatabase() {
-        Sales existingSale = salesService.getSales(1L);
+        Sales existingSale = salesService.getSales(8L);
         assertNotNull(existingSale);
     }
 
     @Test
     void testThatQuantityAndPriceInASaleCanBeUpdated() {
         EditSales editSalesRequest = new EditSales();
-        editSalesRequest.setTransactionId(3L);
+        editSalesRequest.setTransactionId(2L);
         List<TransactionRequest> transactionRequestList = new ArrayList<>();
-        transactionRequestList.add(new TransactionRequest(1L, 25, 240000.00));
+        transactionRequestList.add(new TransactionRequest(152L, 3, 16700000.00));
         editSalesRequest.setTransactions(transactionRequestList);
-        Response response = salesService.editQuantityAndPricesOfSale(1L, editSalesRequest);
+        Response response = salesService.editQuantityAndPricesOfSale(2L, editSalesRequest);
         assertEquals("Quantity and price updated successfully", response.getMessage());
     }
 

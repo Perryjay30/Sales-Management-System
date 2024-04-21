@@ -18,9 +18,9 @@ class UserServiceImplTest {
     @Test
     void testThatUserCanRegister() {
         UserRegistrationRequest userRegistrationRequest = new UserRegistrationRequest();
-        userRegistrationRequest.setEmail("starlight@gmail.com");
-        userRegistrationRequest.setFirstName("AppGlobal");
-        userRegistrationRequest.setLastName("Perry");
+        userRegistrationRequest.setEmail("glenmurr@gmail.com");
+        userRegistrationRequest.setFirstName("Glen");
+        userRegistrationRequest.setLastName("Murray");
         userRegistrationRequest.setPassword("Perryjay@17");
         String response = userService.register(userRegistrationRequest);
         assertEquals("Token successfully sent to your email. Please check.", response);
@@ -29,8 +29,8 @@ class UserServiceImplTest {
     @Test
     void testThatUserCanCreateAccount() {
         VerifyOtpRequest verifyOtpRequest = new VerifyOtpRequest();
-        verifyOtpRequest.setToken("1336");
-        Response response = userService.createAccount("starlight@gmail.com", verifyOtpRequest);
+        verifyOtpRequest.setToken("8879");
+        Response response = userService.createAccount("glenmurr@gmail.com", verifyOtpRequest);
         assertEquals("User registration successful", response.getMessage());
     }
 
