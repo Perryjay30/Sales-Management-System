@@ -48,32 +48,4 @@ public class LoggingAspect {
         return responseObject;
     }
 
-
-
-//    private final LoggingService loggingService;
-//
-//    public LoggingAspect(LoggingService loggingService) {
-//        this.loggingService = loggingService;
-//    }
-//
-////    @Before("execution(* com.challengetwo.salesmanagementsystem.*.*.*(..))")
-////    public void logBefore(JoinPoint joinPoint) {
-////        loggingService.logActivity(joinPoint.getSignature().getName(), "Before");
-////    }
-//
-//    @After("execution(* com.challengetwo.salesmanagementsystem.*.*.*(..))")
-//    public void logAfter(JoinPoint joinPoint) {
-//        loggingService.logActivity(joinPoint.getSignature().getName(), "After");
-//    }
-//
-//    @AfterReturning(pointcut = "execution(* com.challengetwo.salesmanagementsystem.*.*.*(..))", returning = "result")
-//    public void logAfterReturning(JoinPoint joinPoint, Object result) {
-//        loggingService.logActivity(joinPoint.getSignature().getName(), "AfterReturning with result: " + result);
-//    }
-//
-//    @AfterThrowing(pointcut = "execution(* com.challengetwo.salesmanagementsystem.*.*.*(..))", throwing = "exception")
-//    public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) {
-//        loggingService.logActivity(joinPoint.getSignature().getName(), "AfterThrowing with exception: " + exception.getMessage());
-//    }
-
 }
