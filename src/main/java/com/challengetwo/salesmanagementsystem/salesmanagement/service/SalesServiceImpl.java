@@ -13,21 +13,15 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class SalesServiceImpl implements SalesService {
 
     private final SalesRepository salesRepository;
     private final TransactionRepository transactionRepository;
-
-//    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
-
 
     public SalesServiceImpl(SalesRepository salesRepository, TransactionRepository transactionRepository) {
         this.salesRepository = salesRepository;
@@ -87,6 +81,11 @@ public class SalesServiceImpl implements SalesService {
         existingSale.setTransactions(transactions);
         salesRepository.save(existingSale);
         return new Response("Quantity and price updated successfully");
+    }
+
+    @Override
+    public List<Sales> getAllSales() {
+        return salesRepository.findAllSales();
     }
 
 
