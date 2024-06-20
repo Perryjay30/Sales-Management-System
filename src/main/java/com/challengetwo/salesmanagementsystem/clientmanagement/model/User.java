@@ -38,10 +38,6 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CustomerOrder> customerOrderList = new ArrayList<>();
     private double totalSpending;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "otp_token_id", referencedColumnName = "id", nullable = true)
-    private OtpToken otpToken;
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    private List<Cart> customerCart = new ArrayList<>();
 //    @ElementCollection(fetch = FetchType.EAGER)

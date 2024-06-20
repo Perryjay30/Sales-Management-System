@@ -47,7 +47,6 @@ public class SalesServiceImpl implements SalesService {
         List<Transaction> transactions = new ArrayList<>();
         for (TransactionRequest transactionReq : transactionRequests) {
             Transaction transaction = new Transaction();
-            transaction.setSales(savedSale);
             transaction.setProductId(transactionReq.getProductId());
             transaction.setQuantity(transactionReq.getQuantity());
             transaction.setPrice(transactionReq.getPrice());

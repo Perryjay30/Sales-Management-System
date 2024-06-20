@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class Sales {
     @Column(name = "seller_id")
     private Long sellerId;
     @OneToMany(mappedBy = "sales", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Transaction> transactions;
 
     @Transient
