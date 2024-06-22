@@ -5,17 +5,21 @@ import com.challengetwo.salesmanagementsystem.exception.SalesManagementSystemExc
 import com.challengetwo.salesmanagementsystem.salesmanagement.dto.request.CreateSalesRequest;
 import com.challengetwo.salesmanagementsystem.salesmanagement.dto.request.EditSales;
 import com.challengetwo.salesmanagementsystem.salesmanagement.dto.request.TransactionRequest;
+import com.challengetwo.salesmanagementsystem.salesmanagement.dto.response.SalesResponseDTO;
+import com.challengetwo.salesmanagementsystem.salesmanagement.dto.response.TransactionResponseDTO;
 import com.challengetwo.salesmanagementsystem.salesmanagement.model.Sales;
 import com.challengetwo.salesmanagementsystem.salesmanagement.model.Transaction;
 import com.challengetwo.salesmanagementsystem.salesmanagement.repository.SalesRepository;
 import com.challengetwo.salesmanagementsystem.salesmanagement.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SalesServiceImpl implements SalesService {
@@ -36,24 +40,28 @@ public class SalesServiceImpl implements SalesService {
         savedSale.setCreationDate(LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(new Date())));
 
         salesRepository.save(savedSale);
-        List<Transaction> transactions = getTransactionsForASale(createSalesRequest, savedSale);
+        List<Transaction> transactions = createSalesRequest.getTransactions().stream()
+                .map(transactionReq -> new Transaction(null, savedSale, transactionReq.getProductId(), transactionReq.getQuantity(), transactionReq.getPrice()))
+                .collect(Collectors.toList());
         savedSale.setTransactions(transactions);
         salesRepository.save(savedSale);
         return new Response("A sale has been saved successfully!!");
     }
 
-    private List<Transaction> getTransactionsForASale(CreateSalesRequest createSalesRequest, Sales savedSale) {
-        List<TransactionRequest> transactionRequests = createSalesRequest.getTransactions();
-        List<Transaction> transactions = new ArrayList<>();
-        for (TransactionRequest transactionReq : transactionRequests) {
+    private List<Transaction> getTransactionsForASale(Sales savedSale) {
+//        List<TransactionRequest> transactionRequests = createSalesRequest.getTransactions();
+        TransactionRequest transactionReq = new TransactionRequest();
+        List<Transaction> transactionList = new ArrayList<>();
+//        for (TransactionRequest transactionReq : transactionRequests) {
             Transaction transaction = new Transaction();
+            transaction.setSales(savedSale);
             transaction.setProductId(transactionReq.getProductId());
             transaction.setQuantity(transactionReq.getQuantity());
             transaction.setPrice(transactionReq.getPrice());
-            transactions.add(transaction);
-        }
-        transactionRepository.saveAll(transactions);
-        return transactions;
+            transactionList.add(transaction);
+//        }
+        transactionRepository.saveAll(transactionList);
+        return transactionList;
     }
 
     @Override
@@ -82,10 +90,40 @@ public class SalesServiceImpl implements SalesService {
         return new Response("Quantity and price updated successfully");
     }
 
+//    @Override
+//    public List<SalesResponseDTO> getAllSales() {
+//        return salesRepository.findAllSales();
+//    }
+
+    @Transactional(readOnly = true)
     @Override
-    public List<Sales> getAllSales() {
-        return salesRepository.findAllSales();
+    public List<SalesResponseDTO> getAllSales() {
+        List<Sales> salesList = salesRepository.findAll();
+        return salesList.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
+    private SalesResponseDTO convertToDTO(Sales sales) {
+        SalesResponseDTO salesDTO = new SalesResponseDTO();
+        salesDTO.setId(sales.getId());
+        salesDTO.setCreationDate(sales.getCreationDate());
+        salesDTO.setModifiedDate(sales.getModifiedDate());
+        salesDTO.setClientId(sales.getClientId());
+        salesDTO.setSellerId(sales.getSellerId());
+        salesDTO.setTotal(sales.getTotal());
+
+        List<TransactionResponseDTO> transactionDTOs = sales.getTransactions().stream()
+                .map(transaction -> {
+                    TransactionResponseDTO transactionDTO = new TransactionResponseDTO();
+                    transactionDTO.setId(transaction.getId());
+                    transactionDTO.setProductId(transaction.getProductId());
+                    transactionDTO.setQuantity(transaction.getQuantity());
+                    transactionDTO.setPrice(transaction.getPrice());
+                    return transactionDTO;
+                })
+                .collect(Collectors.toList());
+
+        salesDTO.setTransactions(transactionDTOs);
+        return salesDTO;
+    }
 
 }
