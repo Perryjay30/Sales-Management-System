@@ -21,7 +21,6 @@ public interface SalesRepository extends JpaRepository<Sales, Long> {
     List<Sales> findByCreationDateBetweenFetchTransactions(LocalDate startDate, LocalDate endDate);
     @Query("SELECT s FROM Sales s LEFT JOIN FETCH s.transactions")
     List<Sales> findAllSales();
-    Optional<SalesResponseDTO> getSalesById(Long salesId);
 
 
 

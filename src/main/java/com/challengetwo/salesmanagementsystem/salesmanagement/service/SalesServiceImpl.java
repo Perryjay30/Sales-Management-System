@@ -50,8 +50,9 @@ public class SalesServiceImpl implements SalesService {
 
     @Override
     public SalesResponseDTO getSalesById(Long salesId) {
-        return salesRepository.getSalesById(salesId).orElseThrow(
+        Sales existingSales = salesRepository.findSalesById(salesId).orElseThrow(
                 () -> new SalesManagementSystemException("Sales isn't available!!"));
+        return convertToDTO(existingSales);
     }
 
     @Override
