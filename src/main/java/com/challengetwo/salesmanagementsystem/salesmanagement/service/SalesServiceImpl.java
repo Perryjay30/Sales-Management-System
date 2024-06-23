@@ -48,26 +48,10 @@ public class SalesServiceImpl implements SalesService {
         return new Response("A sale has been saved successfully!!");
     }
 
-    private List<Transaction> getTransactionsForASale(Sales savedSale) {
-//        List<TransactionRequest> transactionRequests = createSalesRequest.getTransactions();
-        TransactionRequest transactionReq = new TransactionRequest();
-        List<Transaction> transactionList = new ArrayList<>();
-//        for (TransactionRequest transactionReq : transactionRequests) {
-            Transaction transaction = new Transaction();
-            transaction.setSales(savedSale);
-            transaction.setProductId(transactionReq.getProductId());
-            transaction.setQuantity(transactionReq.getQuantity());
-            transaction.setPrice(transactionReq.getPrice());
-            transactionList.add(transaction);
-//        }
-        transactionRepository.saveAll(transactionList);
-        return transactionList;
-    }
-
     @Override
-    public Sales getSales(Long salesId) {
-        return salesRepository.findSalesById(salesId)
-                .orElseThrow(() -> new SalesManagementSystemException("Sales not found"));
+    public SalesResponseDTO getSalesById(Long salesId) {
+        return salesRepository.getSalesById(salesId).orElseThrow(
+                () -> new SalesManagementSystemException("Sales isn't available!!"));
     }
 
     @Override
@@ -89,11 +73,6 @@ public class SalesServiceImpl implements SalesService {
         salesRepository.save(existingSale);
         return new Response("Quantity and price updated successfully");
     }
-
-//    @Override
-//    public List<SalesResponseDTO> getAllSales() {
-//        return salesRepository.findAllSales();
-//    }
 
     @Transactional(readOnly = true)
     @Override
@@ -125,5 +104,6 @@ public class SalesServiceImpl implements SalesService {
         salesDTO.setTransactions(transactionDTOs);
         return salesDTO;
     }
+
 
 }

@@ -22,7 +22,7 @@ public class SalesServiceController {
 
     @GetMapping("/getSalesById/{salesId}")
     public ResponseEntity<?> getSalesById(@PathVariable Long salesId) {
-        return ResponseEntity.ok(salesService.getSales(salesId));
+        return ResponseEntity.ok(salesService.getSalesById(salesId));
     }
 
     @PutMapping("/editSales/{salesId}")

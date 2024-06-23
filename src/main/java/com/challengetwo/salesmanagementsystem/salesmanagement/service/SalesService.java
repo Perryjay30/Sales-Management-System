@@ -11,7 +11,7 @@ import java.util.List;
 public interface SalesService {
 
     Response createSales(CreateSalesRequest createSalesRequest);
-    Sales getSales(Long salesId);
+    SalesResponseDTO getSalesById(Long salesId);
     Response editQuantityAndPricesOfSale(Long salesId, EditSales editSalesRequest);
     List<SalesResponseDTO> getAllSales();
 }
